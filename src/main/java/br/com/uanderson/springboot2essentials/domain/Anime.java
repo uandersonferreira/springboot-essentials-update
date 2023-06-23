@@ -1,4 +1,4 @@
-package br.com.uanderson.springboot2essentialsupdate.domain;
+package br.com.uanderson.springboot2essentials.domain;
 
 public class Anime {
     private String name;

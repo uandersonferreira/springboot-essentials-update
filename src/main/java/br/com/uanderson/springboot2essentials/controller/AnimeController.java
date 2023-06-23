@@ -1,8 +1,7 @@
-package br.com.uanderson.springboot2essentialsupdate.controller;
+package br.com.uanderson.springboot2essentials.controller;
 
-import br.com.uanderson.springboot2essentialsupdate.domain.Anime;
-import br.com.uanderson.springboot2essentialsupdate.util.DateUtil;
-import lombok.AllArgsConstructor;
+import br.com.uanderson.springboot2essentials.domain.Anime;
+import br.com.uanderson.springboot2essentials.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
