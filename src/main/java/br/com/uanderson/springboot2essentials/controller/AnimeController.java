@@ -28,7 +28,7 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.listAll(), HttpStatus.OK);
     }
     @GetMapping(path = "/{id}")//Quando temos mais de 1 method GET é necessaŕio diferencialos por um 'path' caminho que apronta pra um endpoint /animes/{id}
-    public ResponseEntity<Anime> findAnimeById(@PathVariable Long id){
+    public ResponseEntity<Anime> findById(@PathVariable Long id){
         return new ResponseEntity<>(animeService.findAnimeById(id), HttpStatus.OK);
     }
 
@@ -45,6 +45,13 @@ public class AnimeController {
 
     }
 
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+        animeService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
 
 
 }//class
@@ -52,4 +59,32 @@ public class AnimeController {
 /*
 @RestController -> Retorna um corpo contento somente String/Json
 @Controller -> Retorna uma pagina html inteira
+
+------------------------------------------------------
+MÉTODOS IDEMPOTENTES: Significa dizer que, não importa
+quantas vezes forem executados(request), o seu resultado final(response)
+deve ser o mesmo.
+
+Um método idempotente é um método em que uma requisição idêntica
+pode ser feita uma ou mais vezes, em sequência, com o mesmo efeito,
+enquanto deixa o servidor no mesmo estado.
+
+- O "Hypertext Transfer Protocol (HTTP) Method Registry" foi
+preenchido com os registros abaixo:
+
+   +---------+------+------------+---------------+
+   | Method  | Safe | Idempotent | Reference     |
+   +---------+------+------------+---------------+
+   | CONNECT | no   | no         | Section 4.3.6 |
+   | DELETE  | no   | yes        | Section 4.3.5 |
+   | GET     | yes  | yes        | Section 4.3.1 |
+   | HEAD    | yes  | yes        | Section 4.3.2 |
+   | OPTIONS | yes  | yes        | Section 4.3.7 |
+   | POST    | no   | no         | Section 4.3.3 |
+   | PUT     | no   | yes        | Section 4.3.4 |
+   | TRACE   | yes  | yes        | Section 4.3.8 |
+   +---------+------+------------+---------------+
+
+
+
  */
