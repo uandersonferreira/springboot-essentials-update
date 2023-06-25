@@ -1,6 +1,7 @@
 package br.com.uanderson.springboot2essentials.service;
 
 import br.com.uanderson.springboot2essentials.domain.Anime;
+import br.com.uanderson.springboot2essentials.mapper.AnimeMapper;
 import br.com.uanderson.springboot2essentials.repository.AnimeRepository;
 import br.com.uanderson.springboot2essentials.requestDto.AnimePostRequestBody;
 import br.com.uanderson.springboot2essentials.requestDto.AnimePutRequestBody;
@@ -27,7 +28,7 @@ public class AnimeService {
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        Anime anime = Anime.builder().name(animePostRequestBody.name()).build();
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
         return animeRepository.save(anime);
     }
 
@@ -37,10 +38,8 @@ public class AnimeService {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findAnimeByIdOrThrowBadRequestException(animePutRequestBody.id());//Irá lançar uma exception cao tentem atualizar um anime que não exista no banco
-        Anime anime = Anime.builder()
-                .id(savedAnime.getId())//Só uma forma de garantir que estamos pegando o id de um Anime já existente no banco
-                .name(animePutRequestBody.name())
-                .build();
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        anime.setId(savedAnime.getId());//Só uma forma de garantir que estamos pegando o id de um Anime já existente no banco
         animeRepository.save(anime);
     }
 }//class
