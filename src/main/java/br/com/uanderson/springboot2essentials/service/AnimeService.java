@@ -1,6 +1,10 @@
 package br.com.uanderson.springboot2essentials.service;
 
 import br.com.uanderson.springboot2essentials.domain.Anime;
+import br.com.uanderson.springboot2essentials.repository.AnimeRepository;
+import br.com.uanderson.springboot2essentials.requestDto.AnimePostRequestBody;
+import br.com.uanderson.springboot2essentials.requestDto.AnimePutRequestBody;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,46 +13,34 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
+@RequiredArgsConstructor
 public class AnimeService {
     //-@Service representa uma Class que é reponsável pela implementação da REGRA DE NEGÓCIO da aplicação!
-
-    private static List<Anime> animes;//Lista imutável, onde todas as instâncias da classe terão acesso
-                                      // à mesma lista, independentemente de quantos objetos sejam criados
-    static {
-        //Bloco static é iniciado primeiro, por isso se cria um intancia de arrayList e atribui a animes
-        animes = new ArrayList<>(//Criar uma instância de arrayList para que seja possível
-                                 // manipular a lista 'animes' que é imutável, senão gera um 'UnsupportedOperationException', pois não aceita modificações
-                List.of(
-                        new Anime(1L,"Naruto"),
-                        new Anime(2L,"Boruto"),
-                        new Anime(3L,"Boku no Hero Academy")
-                )
-        );
-    }
+    private final AnimeRepository animeRepository;
 
     public List<Anime> listAll(){
-        return animes;
+        return animeRepository.findAll();
     }
-    public Anime findAnimeById(long id){
-        return animes.stream()
-                .filter(anime -> anime.getId().equals(id))
-                .findFirst()
+    public Anime findAnimeByIdOrThrowBadRequestException(long id){
+        return animeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Anime not found with id '%s'", id)));
     }
 
-    public Anime save(Anime anime) {
-        long id = ThreadLocalRandom.current().nextLong(3, 1000000);
-        anime.setId(id);
-        animes.add(anime);
-        return anime;
+    public Anime save(AnimePostRequestBody animePostRequestBody) {
+        Anime anime = Anime.builder().name(animePostRequestBody.name()).build();
+        return animeRepository.save(anime);
     }
 
     public void delete(long id) {
-        animes.remove(findAnimeById(id));
+        animeRepository.delete(findAnimeByIdOrThrowBadRequestException(id));
     }
 
-    public void replace(Anime anime) {
-        delete(anime.getId());
-        animes.add(anime);
+    public void replace(AnimePutRequestBody animePutRequestBody) {
+        Anime savedAnime = findAnimeByIdOrThrowBadRequestException(animePutRequestBody.id());//Irá lançar uma exception cao tentem atualizar um anime que não exista no banco
+        Anime anime = Anime.builder()
+                .id(savedAnime.getId())//Só uma forma de garantir que estamos pegando o id de um Anime já existente no banco
+                .name(animePutRequestBody.name())
+                .build();
+        animeRepository.save(anime);
     }
 }//class

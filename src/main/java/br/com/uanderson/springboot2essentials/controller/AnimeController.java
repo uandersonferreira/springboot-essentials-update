@@ -1,6 +1,8 @@
 package br.com.uanderson.springboot2essentials.controller;
 
 import br.com.uanderson.springboot2essentials.domain.Anime;
+import br.com.uanderson.springboot2essentials.requestDto.AnimePostRequestBody;
+import br.com.uanderson.springboot2essentials.requestDto.AnimePutRequestBody;
 import br.com.uanderson.springboot2essentials.service.AnimeService;
 import br.com.uanderson.springboot2essentials.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -29,19 +31,19 @@ public class AnimeController {
     }
     @GetMapping(path = "/{id}")//Quando temos mais de 1 method GET é necessaŕio diferencialos por um 'path' caminho que apronta pra um endpoint /animes/{id}
     public ResponseEntity<Anime> findById(@PathVariable Long id){
-        return new ResponseEntity<>(animeService.findAnimeById(id), HttpStatus.OK);
+        return new ResponseEntity<>(animeService.findAnimeByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
     @PostMapping
     //@ResponseStatus(HttpStatus.CREATED) //outra forma de retornar o status
-    public ResponseEntity<Anime> save(@RequestBody Anime anime){
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
        /*
        @RequestBody Anime anime -> Aqui o Jackson entra em cena realizando o mapeamento
        do objeto recebido no corpo(body) para um "Anime", para isso o nome dos atributos/propriedades
        devem ser as mesma, caso contrário é necessário informar ao Jackson o nome do atributo que deve ser
        mapeado, através da anotação:  @JsonProperty("nome do atributo JSON vindo do corpo") em cima do atributo da classe "Anime"
         */
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
 
     }
 
@@ -52,8 +54,8 @@ public class AnimeController {
     }
 
     @PutMapping()
-    public ResponseEntity<Void> replace(@RequestBody Anime anime){
-        animeService.replace(anime);
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+        animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         /*
