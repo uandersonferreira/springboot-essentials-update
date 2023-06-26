@@ -32,9 +32,8 @@ public class AnimeService {
     }
 
     @Transactional //Habilita o princípio da atomicidade(rollback(): que Cancela uma transação se ocorre erros)
-    public Anime save(AnimePostRequestBody animePostRequestBody) throws Exception {
+    public Anime save(AnimePostRequestBody animePostRequestBody) {
         Anime animeSaved = animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
-        if (true) throw new Exception("Bad code");
         return animeSaved;
 
                 /*

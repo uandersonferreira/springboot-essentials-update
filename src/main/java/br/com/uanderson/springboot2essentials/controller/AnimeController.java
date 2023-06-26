@@ -5,6 +5,7 @@ import br.com.uanderson.springboot2essentials.requestDto.AnimePostRequestBody;
 import br.com.uanderson.springboot2essentials.requestDto.AnimePutRequestBody;
 import br.com.uanderson.springboot2essentials.service.AnimeService;
 import br.com.uanderson.springboot2essentials.util.DateUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -36,12 +37,15 @@ public class AnimeController {
 
     @PostMapping
     //@ResponseStatus(HttpStatus.CREATED) //outra forma de retornar o status
-    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) throws Exception {
+    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){
        /*
        @RequestBody Anime anime -> Aqui o Jackson entra em cena realizando o mapeamento
        do objeto recebido no corpo(body) para um "Anime", para isso o nome dos atributos/propriedades
        devem ser as mesma, caso contrário é necessário informar ao Jackson o nome do atributo que deve ser
        mapeado, através da anotação:  @JsonProperty("nome do atributo JSON vindo do corpo") em cima do atributo da classe "Anime"
+
+        @Valid - È o que garante que as validações dos campos feitas com spring validation,
+        estão sendo cumpridas.
         */
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
 
