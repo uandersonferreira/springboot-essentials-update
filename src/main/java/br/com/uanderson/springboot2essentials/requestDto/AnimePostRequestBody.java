@@ -1,10 +1,13 @@
 package br.com.uanderson.springboot2essentials.requestDto;
 
 import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
 
 public record AnimePostRequestBody(
         @NotEmpty(message = "The anime 'name' cannot be empty")
-        String name
+        String name,
+        @URL(message = "The URL is not valid")
+        String url
 ) { }
 
 /*
