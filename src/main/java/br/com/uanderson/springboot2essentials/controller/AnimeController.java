@@ -68,6 +68,36 @@ public class AnimeController {
          */
     }
 
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam String name){
+        return ResponseEntity.ok(animeService.findByName(name));
+
+        /*
+        Quando temos mais de um method utilizando um method http, como as seguir:
+        - @GetMapping(path = "/{name}")
+        - @GetMapping(path = "/{id}")
+        Gera ambiguidade, pois o spring não consegue diferenciar, já que estamos dizendo que
+        no mesmo endpoint é aceito dois tipos de dados.
+
+        Neste caso, o recomendavél é criar um novo endpoint que aceite o segundo tipo de dado.
+
+        E umas dessas opções é utilizando o @RequestParam (parametros passados na url), que
+        por padrão são obrigatório(s) passar, caso opte pela sua utilização.
+        ex:
+        - http://localhost:8080/animes/find?name=Naruto Shippuden
+
+       DIREFERENÇA ENTRE  @RequestParam e @PathVariable
+        @RequestParam - Parametros passados na url -> animes/find?name=naruto&idade=20&cargo=hokage
+            - A anotação @RequestParam é usada para mapear parâmetros de consulta (query parameters) em uma URL.
+            - É possível definir valores padrão para os parâmetros usando o atributo
+             defaultValue da anotação @RequestParam (@RequestParam(defaultValue = "") String name)
+
+        @PathVariable - Parametros/Valores que fazem parte da url -> animes/1 ( animes/{id} )
+            - A anotação @PathVariable é usada para mapear partes variáveis de uma URL.
+
+         */
+    }
+
 
 
 

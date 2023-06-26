@@ -88,6 +88,12 @@
 					<source>17</source>
 					<target>17</target>
 					<annotationProcessorPaths>
+						<!--
+						annotationProcessorPaths - é onde ficam s processadores de anotações, que são
+						 ferramentas que permitem gerar, processar ou analisar código com base em anotações
+						  presentes nas classes do projeto.
+						  No nosso caso: lombok e mapStruct
+						-->
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
