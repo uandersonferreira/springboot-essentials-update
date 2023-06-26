@@ -2,10 +2,6 @@ package br.com.uanderson.springboot2essentials.handler;
 
 import br.com.uanderson.springboot2essentials.exeption.BadRequestException;
 import br.com.uanderson.springboot2essentials.exeption.BadRequestExceptionDetails;
-import br.com.uanderson.springboot2essentials.util.DateUtil;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,9 +31,9 @@ public class RestExceptionHandler {
         /*
             @ControllerAdvice: é usada para definir um componente global que lida com exceções
             em vários controladores do Spring. Ela oferece a possibilidade de tratar exceções de
-             forma centralizada, personalizar respostas de erro e compartilhar atributos em modelos.
-             Isso ajuda a melhorar a consistência e a modularidade do tratamento de exceções em toda
-             a aplicação. DE certa, forma pode ser visto como uma barreira que intercepta todas as exceções.
+            forma centralizada, personalizar respostas de erro e compartilhar atributos em modelos.
+            Isso ajuda a melhorar a consistência e a modularidade do tratamento de exceções em toda
+            a aplicação. DE certa, forma pode ser visto como uma barreira que intercepta todas as exceções.
 
 
             O @ExceptionHandler(exceptionPersonalizada.class) é uma anotação usada para lidar com as exceções
