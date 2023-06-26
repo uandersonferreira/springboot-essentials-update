@@ -1,6 +1,7 @@
 package br.com.uanderson.springboot2essentials.service;
 
 import br.com.uanderson.springboot2essentials.domain.Anime;
+import br.com.uanderson.springboot2essentials.exeption.BadRequestException;
 import br.com.uanderson.springboot2essentials.mapper.AnimeMapper;
 import br.com.uanderson.springboot2essentials.repository.AnimeRepository;
 import br.com.uanderson.springboot2essentials.requestDto.AnimePostRequestBody;
@@ -26,7 +27,7 @@ public class AnimeService {
 
     public Anime findAnimeByIdOrThrowBadRequestException(long id){
         return animeRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Anime not found with id '%s'", id)));
+                .orElseThrow(() -> new BadRequestException(String.format("Anime not found with id '%s'", id)));
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
