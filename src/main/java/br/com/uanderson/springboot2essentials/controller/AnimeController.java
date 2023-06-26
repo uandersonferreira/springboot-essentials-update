@@ -36,7 +36,7 @@ public class AnimeController {
 
     @PostMapping
     //@ResponseStatus(HttpStatus.CREATED) //outra forma de retornar o status
-    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) throws Exception {
        /*
        @RequestBody Anime anime -> Aqui o Jackson entra em cena realizando o mapeamento
        do objeto recebido no corpo(body) para um "Anime", para isso o nome dos atributos/propriedades
