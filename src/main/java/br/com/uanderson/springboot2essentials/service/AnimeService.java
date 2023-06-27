@@ -7,6 +7,8 @@ import br.com.uanderson.springboot2essentials.repository.AnimeRepository;
 import br.com.uanderson.springboot2essentials.requestDto.AnimePostRequestBody;
 import br.com.uanderson.springboot2essentials.requestDto.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +19,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnimeService {
     //-@Service representa uma Class que é reponsável pela implementação da REGRA DE NEGÓCIO da aplicação!
-    private final AnimeRepository animeRepository;
+    private final AnimeRepository animeRepository;//Por estamos utilizando o JpaRepository, temos tantos os method
+                                                  // de CrudRepository, quanto de PaginationAndSortingRepository.
 
-    public List<Anime> listAll(){
-        return animeRepository.findAll();
+    public Page<Anime> listAll(Pageable pageable){
+        return animeRepository.findAll(pageable);
+        /*
+        Retornar os objetos contidos em Page<Anime>, com opçoes de paginação habilitadas
+        ex:
+            http://localhost:8080/animes?size=5&page=1
+        - size -> quantidade de elementos por página
+        - page -> página em si acessada, lembrando que começa em 0 pois é uma lista no fim das contas
+         */
     }
     public List<Anime> findByName(String name){
         return animeRepository.findByName(name);
