@@ -31,6 +31,11 @@ public class AnimeController {
     public ResponseEntity<Page<Anime>> list(Pageable pageable){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return new ResponseEntity<>(animeService.listAll(pageable), HttpStatus.OK);
+        /*
+        Pageable é uma interface fornecida pelo Spring Framework que permite a paginação
+        de resultados em consultas de banco de dados. Ela encapsula informações sobre a
+        página solicitada, como o número da página, o tamanho da página e as opções de ordenação.
+         */
     }
     @GetMapping(path = "/{id}")//Quando temos mais de 1 method GET é necessaŕio diferencialos por um 'path' caminho que apronta pra um endpoint /animes/{id}
     public ResponseEntity<Anime> findById(@PathVariable Long id){
