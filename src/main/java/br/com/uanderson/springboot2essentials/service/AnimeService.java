@@ -32,6 +32,10 @@ public class AnimeService {
         - page -> página em si acessada, lembrando que começa em 0 pois é uma lista no fim das contas
          */
     }
+    public List<Anime> listAllNoPageable() {
+        return animeRepository.findAll();
+    }
+
     public List<Anime> findByName(String name){
         return animeRepository.findByName(name);
     }
