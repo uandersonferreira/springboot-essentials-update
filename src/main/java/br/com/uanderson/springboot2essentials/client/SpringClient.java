@@ -3,8 +3,7 @@ package br.com.uanderson.springboot2essentials.client;
 import br.com.uanderson.springboot2essentials.domain.Anime;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -43,9 +42,35 @@ public class SpringClient {
         responseType: A classe Java que você deseja usar para mapear o corpo da resposta.
          */
 
-    }
+        //UTILIZNADO O postForEntity();
+        Anime kingdom = Anime.builder().name("Kingdom").build();
+        ResponseEntity<Anime> kingdowmSaved = new RestTemplate().postForEntity("http://localhost:8080/animes", kingdom, Anime.class);
+        log.info("postForEntity: {}", kingdowmSaved);
+
+        //UTILIZANDO O exchange();
+        Anime samuraiChamploo = Anime.builder().name("Samurai Champloo").build();
+        ResponseEntity<Anime> samuraiChamplooSaved = new RestTemplate().exchange("http://localhost:8080/animes",
+                HttpMethod.POST,
+                new HttpEntity<>(samuraiChamploo),//HttpEntity - representa uma entidade HTTP completa, contendo um corpo ou cabeçalhos ou ambos
+                Anime.class
+        );//Também podemos pegar o objeto em si(Anime) se utilizamos '.getBody()'
+
+        log.info("exchange + POST: {}", samuraiChamplooSaved, createJsonHeader());
 
 
+    }//main
+
+    private static HttpHeaders createJsonHeader(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        return  httpHeaders;
+        /*
+         Podemos setar mais coisas ao header caso queiramos, como:
+            - token
+            - as credenciais, username, password
+            - elementos permitidos num header em geral
+         */
+    }//method createJsonHeader
 
 }//clas
 /*
