@@ -2,6 +2,7 @@ package br.com.uanderson.springboot2essentials.configurer;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,15 +10,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 @Configuration
-public class ApplicationWebMvnConfigurer implements WebMvcConfigurer {
+public class ApplicationWebMvcConfigurer implements WebMvcConfigurer {
     @Override//Sobreescrevendo a Configuração padrão do spring a respeito da paginação!
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         /*
         Neste exemplo estamos sobreescrendo/definindo a página e quantidade de objetos
-        mostrados na tela ao se requisitado todos os animes.
+        mostrados na tela ao se requisitado todos os animes, ORDENANDO pelo id em ordem DECRESCENTE.
+        URL parametros( ?sort=id,desc).
+
+        ALTERAÇÕES A NÍVEL DE BANCO DE DADOS, NÃO DA APLICAÇÃO.
+        attribute
+
          */
         PageableHandlerMethodArgumentResolver pageableHandler= new PageableHandlerMethodArgumentResolver();
-        PageRequest pageRequest = PageRequest.of(0,5);
+        PageRequest pageRequest = PageRequest.of(0,5, Sort.by("id").descending());
         pageableHandler.setFallbackPageable(pageRequest);
         resolvers.add(pageableHandler);
     }

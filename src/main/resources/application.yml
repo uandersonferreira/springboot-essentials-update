@@ -12,6 +12,12 @@ spring:
       ddl-auto: update
     show-sql: true
 
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+
 
 #jdbc:mysql://localhost:3306/db_anime?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
 #useSSl - determinar se a comunicação com o banco de dados deve ser estabelecida por meio do protocolo SSL (Secure Sockets Layer) ou TLS (Transport Layer Security)
