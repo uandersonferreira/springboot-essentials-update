@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AnimePostRequestBody {
         //Classe funciona como um DTO
-
         @NotEmpty(message = "The anime name cannot be empty")// pega campos nulos também
         private String name;
 }
