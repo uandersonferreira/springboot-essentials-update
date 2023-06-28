@@ -1,14 +1,21 @@
 package br.com.uanderson.springboot2essentials.requestDto;
 
 import jakarta.validation.constraints.NotEmpty;
-import org.hibernate.validator.constraints.URL;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record AnimePostRequestBody(
-        @NotEmpty(message = "The anime 'name' cannot be empty")
-        String name,
-        @URL(message = "The URL is not valid")
-        String url
-) { }
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AnimePostRequestBody {
+        //Classe funciona como um DTO
+
+        @NotEmpty(message = "The anime name cannot be empty")// pega campos nulos também
+        private String name;
+}
 
 /*
 Algumas validações disponiveis:

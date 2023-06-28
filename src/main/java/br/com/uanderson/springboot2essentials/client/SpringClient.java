@@ -42,20 +42,39 @@ public class SpringClient {
         responseType: A classe Java que você deseja usar para mapear o corpo da resposta.
          */
 
-        //UTILIZNADO O postForEntity();
-        Anime kingdom = Anime.builder().name("Kingdom").build();
-        ResponseEntity<Anime> kingdowmSaved = new RestTemplate().postForEntity("http://localhost:8080/animes", kingdom, Anime.class);
-        log.info("postForEntity: {}", kingdowmSaved);
+        //UTILIZNADO O postForEntity(); com. só para não salvar dois animes
+//        Anime kingdom = Anime.builder().name("Kingdom").build();
+//        ResponseEntity<Anime> kingdowmSaved = new RestTemplate().postForEntity("http://localhost:8080/animes", kingdom, Anime.class);
+//        log.info("postForEntity: {}", kingdowmSaved);
 
-        //UTILIZANDO O exchange();
+        //UTILIZANDO O exchange() + POST;
         Anime samuraiChamploo = Anime.builder().name("Samurai Champloo").build();
         ResponseEntity<Anime> samuraiChamplooSaved = new RestTemplate().exchange("http://localhost:8080/animes",
                 HttpMethod.POST,
-                new HttpEntity<>(samuraiChamploo),//HttpEntity - representa uma entidade HTTP completa, contendo um corpo ou cabeçalhos ou ambos
+                new HttpEntity<>(samuraiChamploo, createJsonHeader()),//HttpEntity - representa uma entidade HTTP completa, contendo um corpo ou cabeçalhos ou ambos
                 Anime.class
         );//Também podemos pegar o objeto em si(Anime) se utilizamos '.getBody()'
 
-        log.info("exchange + POST: {}", samuraiChamplooSaved, createJsonHeader());
+        log.info("exchange + POST: {}", samuraiChamplooSaved);
+
+        //UTILIZANDO O exchange() + PUT;
+        Anime animeToBeUpdate = samuraiChamplooSaved.getBody();
+        animeToBeUpdate.setName("Samurai Champloo 2");
+        ResponseEntity<Void> samuraiChamplooSavedUpdated = new RestTemplate().exchange("http://localhost:8080/animes",
+                HttpMethod.PUT,
+                new HttpEntity<>(animeToBeUpdate,  createJsonHeader()),//HttpEntity - representa uma entidade HTTP completa, contendo um corpo ou cabeçalhos ou ambos
+                Void.class
+        );
+        log.info("exchange + PUT: {}", samuraiChamplooSavedUpdated);
+
+        //UTILIZANDO O exchange() + DELETE;
+        ResponseEntity<Void> samuraiChamplooDelete = new RestTemplate().exchange("http://localhost:8080/animes/{id}",
+                HttpMethod.DELETE,
+    null,
+                Void.class,
+                animeToBeUpdate.getId()
+        );
+        log.info("exchange + DELETE: {}", samuraiChamplooDelete);
 
 
     }//main

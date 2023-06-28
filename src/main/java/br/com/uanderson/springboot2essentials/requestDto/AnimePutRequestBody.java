@@ -1,4 +1,19 @@
 package br.com.uanderson.springboot2essentials.requestDto;
 
-public record AnimePutRequestBody(Long id, String name) {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AnimePutRequestBody {
+    private Long id;
+    private String name;
 }
+
+/*
+Classe funciona como um DTO
+ */

@@ -92,7 +92,7 @@ public class AnimeService {
     }
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
-        Anime savedAnime = findAnimeByIdOrThrowBadRequestException(animePutRequestBody.id());//Irá lançar uma exception cao tentem atualizar um anime que não exista no banco
+        Anime savedAnime = findAnimeByIdOrThrowBadRequestException(animePutRequestBody.getId());//Irá lançar uma exception cao tentem atualizar um anime que não exista no banco
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
         anime.setId(savedAnime.getId());//Só uma forma de garantir que estamos pegando o id de um Anime já existente no banco
         animeRepository.save(anime);
