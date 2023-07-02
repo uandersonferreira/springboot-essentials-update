@@ -169,6 +169,13 @@ public class AnimeControllerIT {
 
 }//class
 /*
+COMANDO PARA RODAR OS TESTES UNITÁRIOS:
+    - mvn test -Pintegration-tests
+    - mvn = maven
+    - test = ação que queremos
+    - P = profile
+    - integration-tests = id do profile definido no pom.xml
+
 Teste de integração inicia totalmente o servidor da aplicação, simulando um
 deploy em produção e no nosso caso,toda vez que for iniciado será numa porta diferente.
 
