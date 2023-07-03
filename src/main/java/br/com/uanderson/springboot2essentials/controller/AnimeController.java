@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -51,6 +53,13 @@ public class AnimeController {
     }
     @GetMapping(path = "/{id}")//Quando temos mais de 1 method GET é necessaŕio diferencialos por um 'path' caminho que apronta pra um endpoint /animes/{id}
     public ResponseEntity<Anime> findById(@PathVariable Long id){
+        return new ResponseEntity<>(animeService.findAnimeByIdOrThrowBadRequestException(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "by-id/{id}")
+    public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id,
+                                                                 @AuthenticationPrincipal UserDetails userDetails){
+        log.info("Name user logado: {}", userDetails.getUsername());
         return new ResponseEntity<>(animeService.findAnimeByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
