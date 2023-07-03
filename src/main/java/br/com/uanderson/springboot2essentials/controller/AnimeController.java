@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -54,6 +55,7 @@ public class AnimeController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")//verifica se o usuário atual logado possui a permissão de "ADMIN"
     //@ResponseStatus(HttpStatus.CREATED) //outra forma de retornar o status
     public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){
        /*
@@ -129,6 +131,10 @@ public class AnimeController {
 /*
 @RestController -> Retorna um corpo contento somente String/Json
 @Controller -> Retorna uma pagina html inteira
+--------------------------------------------------
+Em resumo, a anotação @PreAuthorize é usada para verificar a autorização
+antes da execução de um método, enquanto a anotação
+@PostAuthorize é usada para verificar a autorização após a execução de um método
 
 ------------------------------------------------------
 MÉTODOS IDEMPOTENTES: Significa dizer que, não importa
