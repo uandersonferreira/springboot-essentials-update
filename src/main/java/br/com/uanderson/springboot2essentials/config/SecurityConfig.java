@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -41,10 +42,21 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //        httpSecurity.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
         http.csrf(AbstractHttpConfigurer::disable);//desabilitando o CSRF
-        http.authorizeHttpRequests((authorizationManager -> authorizationManager.anyRequest().authenticated()))
+        http.authorizeHttpRequests((authorizationManager -> authorizationManager
+                        .requestMatchers("/animes/admin/**").hasRole("ADMIN")//A Ordem de declaração é importante
+                        .requestMatchers(HttpMethod.POST, "/animes").hasRole("ADMIN")
+                        .requestMatchers("/animes/**").hasRole("USER")
+                        .anyRequest().authenticated()))
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
+        /*
+        Ao configurar uma requestMatchers(antiga antMatchers) é preciso ter uma atenção:
+        - pois a ORDEM DE DECLARAÇÃO é importante
+            - Comecando da MENOS restritiva para a MAIS restritiva
+        - Podemos definir uma proteção baseado no tipo do method da requisição em uma
+           determinada URL
+         */
     }
 
     @Bean

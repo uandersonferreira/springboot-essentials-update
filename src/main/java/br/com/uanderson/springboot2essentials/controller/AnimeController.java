@@ -56,16 +56,18 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.findAnimeByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
-    @GetMapping(path = "by-id/{id}")
-    @PreAuthorize("hasRole('ADMIN')")//verifica se o usuário atual logado possui a permissão de "ADMIN"
+    @GetMapping(path = "/by-id/{id}")
+    //@PreAuthorize("hasRole('ADMIN')")//verifica se o usuário atual logado possui a permissão de "ADMIN"
+    //(E mais recomendado utilizar um padrão de url's é aplicar a proteção com um antMatcher)
     public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id,
                                                                  @AuthenticationPrincipal UserDetails userDetails){
         log.info("Name user logado: {}", userDetails.getUsername());
         return new ResponseEntity<>(animeService.findAnimeByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")//verifica se o usuário atual logado possui a permissão de "ADMIN"
+    @PostMapping()
+    //@PreAuthorize("hasRole('ADMIN')")//verifica se o usuário atual logado possui a permissão de "ADMIN"
+    //(E mais recomendado utilizar um padrão de url's é aplicar a proteção com um antMatcher)
     //@ResponseStatus(HttpStatus.CREATED) //outra forma de retornar o status
     public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){
        /*
@@ -81,7 +83,7 @@ public class AnimeController {
 
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/admin/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -145,7 +147,14 @@ public class AnimeController {
 Em resumo, a anotação @PreAuthorize é usada para verificar a autorização
 antes da execução de um método, enquanto a anotação
 @PostAuthorize é usada para verificar a autorização após a execução de um método
-
+ex:
+    @GetMapping(path = "by-id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")//verifica se o usuário atual logado possui a permissão de "ADMIN"
+    public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id,
+                                                                 @AuthenticationPrincipal UserDetails userDetails){
+        log.info("Name user logado: {}", userDetails.getUsername());
+        return new ResponseEntity<>(animeService.findAnimeByIdOrThrowBadRequestException(id), HttpStatus.OK);
+    }
 ------------------------------------------------------
 MÉTODOS IDEMPOTENTES: Significa dizer que, não importa
 quantas vezes forem executados(request), o seu resultado final(response)
