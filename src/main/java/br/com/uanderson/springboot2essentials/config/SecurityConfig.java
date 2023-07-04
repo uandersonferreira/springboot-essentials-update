@@ -45,7 +45,6 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorizationManager -> authorizationManager
                         .requestMatchers( "/swagger-ui/**").permitAll()
                         .requestMatchers("/animes/admin/**").hasRole("ADMIN")//A Ordem de declaração é importante
-                        .requestMatchers(HttpMethod.POST, "/animes").hasRole("ADMIN")
                         .requestMatchers("/animes/**").hasRole("USER")
                         .anyRequest().authenticated()))
                 .formLogin(Customizer.withDefaults())
