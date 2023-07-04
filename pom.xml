@@ -20,6 +20,9 @@
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<lombok.version>1.18.28</lombok.version>
 		<maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+		<springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>
+		<springdoc-openapi-data-rest.version>1.7.0</springdoc-openapi-data-rest.version>
+		<springdoc-openapi-security.version>1.7.0</springdoc-openapi-security.version>
 	</properties>
 
 	<dependencies>
@@ -33,6 +36,27 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<!--[INICIO] springdoc para Documentação da API-->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+		</dependency>
+		<dependency> <!--springdoc-openapi-data-rest -->
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-data-rest</artifactId>
+			<version>${springdoc-openapi-data-rest.version}</version>
+		</dependency>
+		<dependency><!-- springdoc-openapi-security -->
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-security</artifactId>
+			<version>${springdoc-openapi-security.version}</version>
+		</dependency>
+		<!--[FIM] springdoc para Documentação da API-->
+
+
+
 
 		<!--Ativa a segurança na aplicação-->
 		<dependency>

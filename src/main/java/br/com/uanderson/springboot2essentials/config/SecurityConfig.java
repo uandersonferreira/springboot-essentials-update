@@ -43,6 +43,7 @@ public class SecurityConfig {
 //        httpSecurity.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
         http.csrf(AbstractHttpConfigurer::disable);//desabilitando o CSRF
         http.authorizeHttpRequests((authorizationManager -> authorizationManager
+                        .requestMatchers( "/swagger-ui/**").permitAll()
                         .requestMatchers("/animes/admin/**").hasRole("ADMIN")//A Ordem de declaração é importante
                         .requestMatchers(HttpMethod.POST, "/animes").hasRole("ADMIN")
                         .requestMatchers("/animes/**").hasRole("USER")
@@ -61,7 +62,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        log.info("Password encoder {}", passwordEncoder().encode("academy"));
+        log.info("Password encoder {}", passwordEncoder().encode("123"));
         return config.getAuthenticationManager();
     }
 
