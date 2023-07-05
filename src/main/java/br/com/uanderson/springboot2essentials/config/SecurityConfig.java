@@ -46,6 +46,7 @@ public class SecurityConfig {
                         .requestMatchers( "/swagger-ui/**").permitAll()
                         .requestMatchers("/animes/admin/**").hasRole("ADMIN")//A Ordem de declaração é importante
                         .requestMatchers("/animes/**").hasRole("USER")
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated()))
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
