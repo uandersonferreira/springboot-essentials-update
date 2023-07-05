@@ -12,5 +12,15 @@ services:
     volumes:
       - uanderson_data:/var/lib/mysql
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - "./src/main/resources/prometheus.yml:/etc/spring-v1/prometheus/prometheus.yml"#copia de ./src... para etc/prometheus/com o nome de arquivo prometheus.yml
+    command: "--config.file=/etc/spring-v1/prometheus/prometheus.yml" #localização do arquivo de configuração
+    ports:
+      - "9090:9090" #porta do prometheus conf. em prometheus.yml by default is 9090
+
+
 volumes:
   uanderson_data:

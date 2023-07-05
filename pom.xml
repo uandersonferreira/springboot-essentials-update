@@ -26,16 +26,30 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
 
+		<!--Habilita endpoints de monitoramento e gerenciamento em tempo real de uma application-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<!--Para Monitorar e alertar sobre a disponibilidade e o desempenho dos serviços, através dos endpoints de mon e ger-->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<version>1.11.1</version>
+		</dependency>
+
 
 		<!--[INICIO] springdoc para Documentação da API-->
 		<dependency>
@@ -55,10 +69,7 @@
 		</dependency>
 		<!--[FIM] springdoc para Documentação da API-->
 
-
-
-
-		<!--Ativa a segurança na aplicação-->
+		<!--Ativava segurança na aplicação-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
