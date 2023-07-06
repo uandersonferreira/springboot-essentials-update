@@ -3,6 +3,8 @@ server:
     include-stacktrace: on_param #Esconde o stack tracer de errors apresentados no front-end
 
 spring:
+  application:
+    name: springboot-essentials-update
   datasource:
     url: jdbc:mysql://localhost:3306/db_anime?createDatabaseIfNotExist=true
     username: root
@@ -26,8 +28,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: info, health, metrics, prometheus
-      # include: "*" -> Habilitando todos os endpoints disponiveis
+        include: "*"
+      # include: info, health, metrics, prometheus -> Habilitando somente alguns endpoints disponiveis
 
 # INFORMAÇÕES SOBRE A APLICAÇÃO
 info:
