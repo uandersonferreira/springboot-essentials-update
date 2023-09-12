@@ -13,6 +13,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -57,13 +58,23 @@ class AnimeControllerTest {
 }//class
 
 /*
+
 @ExtendWith(SpringExtension.class) - Informando que queremos herdar os comportamentos
                                     do Junit para utilizar com Spring boot em um contexto
-                                     mais isolado.
+                                    mais isolado. Permitindo ao Junit inicializar o contexto do
+                                    Spring antes de executar os testes, permitido assim: acesso
+                                    aos beans do Spring diretamente em nossa classe de teste.
 
-@SpringBootTest - é usada no ecossistema do Spring para testar a aplicação como um todo,
-                  em um contexto mais amplo. Necessita que o banco e a aplicação esteja rodando
-                  ou seja, pois  tenta inicializar a aplicação  para realizar os testes.
+Porque não estamos usando o @SpringBootTest ?
+
+@SpringBootTest - porque é usada no ecossistema do Spring para testar a aplicação como um todo,
+                  em um contexto mais amplo. Sendo assim, necessita de dependências externas, como
+                  banco de dados, serviços web, serviços REST e outros. Além disso, têm a questão do
+                  Overhead de inicialização, que  inicia todo o contexto da aplicação Spring, incluindo
+                  a inicialização do contêiner Spring IoC (Inversão de Controle) e a configuração de todos
+                  os beans gerenciados, ou seja, necessita que a aplicação esteja rodando,
+                  pois  tenta inicializar a aplicação  para realizar os testes. Portanto, sua utilização
+                  e mais recomendada nos teste de integração.
 
 
 
